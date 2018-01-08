@@ -135,4 +135,20 @@ levels(listings$neighbourhood_group_cleansed)
 resultat<-lm(price ~ neighbourhood_group_cleansed + room_type + accommodates + bedrooms + review_scores_rating + size, data=preus)
 summary(resultat)
 
+ocupacio<-listings[,c(8,9,13,17,24,25,29,30,27)]
+head(ocupacio)
+pairs(ocupacio)
+
+resultat2<-lm(availability_365 ~ neighbourhood_group_cleansed + room_type + price + review_scores_rating + cancellation_policy + cleaning_fee + host_identity_verified + host_listings_count, data=ocupacio)
+summary(resultat2)
+library(lattice, pos=21)
+xyplot(availability_365 ~ availability_365 | neighbourhood_group_cleansed, type="p", pch=16, 
+  auto.key=list(border=TRUE), par.settings=simpleTheme(pch=16), scales=list(x=list(relation='same'), 
+  y=list(relation='same')), data=listings)
+xyplot(availability_365 ~ bedrooms | neighbourhood_group_cleansed, type="p", pch=16, 
+  auto.key=list(border=TRUE), par.settings=simpleTheme(pch=16), scales=list(x=list(relation='same'), 
+  y=list(relation='same')), data=listings)
+
+
+write.csv(listings,file="C:/Users/Fenix/Dropbox/uoc/Master Data Science/Tipologia i cicle de vida de les dades/PRACTICA2/listings_analized.csv")
 
